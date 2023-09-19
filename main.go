@@ -18,7 +18,17 @@ func main() {
 	authService := service.NewAuthService()
 	userController := controller.NewUserController(userService, authService)
 
-	router := app.NewRouter(userController)
+	campaignRepository := repository.NewCampaignRepository(db)
+	campaignService := service.NewCampaignService(campaignRepository)
+	campaignController := controller.NewCampaignController(campaignService)
+
+	paymentService := service.NewPaymentService()
+
+	transRepository := repository.NewTransactionRepository(db)
+	transService := service.NewTransactionService(transRepository, campaignRepository, paymentService)
+	transController := controller.NewTransactionHandler(transService)
+
+	router := app.NewRouter(userController, campaignController, transController, userService, authService)
 
 	router.Run()
 
