@@ -32,7 +32,7 @@ func NewUserController(userService service.UserService, authService service.Auth
 func (s *UserControllerImp) RegisterUser(context *gin.Context) {
 	var input web.RegisterUserInput
 
-	err := context.ShouldBindJSON(input)
+	err := context.ShouldBind(&input)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
 		errorsMessage := map[string]any{"errors": errors}
@@ -44,14 +44,14 @@ func (s *UserControllerImp) RegisterUser(context *gin.Context) {
 	newUsers, err := s.userService.RegisterUser(input)
 
 	if err != nil {
-		response := helper.APIResponse("Register account failed", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Register account failed RegisterUser", http.StatusBadRequest, "error", err.Error())
 		context.JSON(http.StatusBadRequest, response)
 		return
 	}
 
 	token, err := s.authService.GenerateToken(newUsers.ID)
 	if err != nil {
-		response := helper.APIResponse("Register account failed", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Register account failed GenerateToken", http.StatusBadRequest, "error", err.Error())
 		context.JSON(http.StatusBadRequest, response)
 		return
 	}
@@ -66,7 +66,7 @@ func (s *UserControllerImp) RegisterUser(context *gin.Context) {
 func (s *UserControllerImp) Login(context *gin.Context) {
 	var input web.LoginInput
 
-	err := context.ShouldBindJSON(&input)
+	err := context.ShouldBind(&input)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := map[string]any{"errors": errors}
@@ -103,7 +103,7 @@ func (s *UserControllerImp) Login(context *gin.Context) {
 func (s UserControllerImp) CheckEmailAvailbility(context *gin.Context) {
 	var input web.CheckEmailInput
 
-	err := context.ShouldBindJSON(&input)
+	err := context.ShouldBind(&input)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}

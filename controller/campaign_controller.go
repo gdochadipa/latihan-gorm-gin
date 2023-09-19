@@ -65,7 +65,7 @@ func (s *CampaignControllerImp) GetCampaign(c *gin.Context) {
 func (s *CampaignControllerImp) CreateCampaign(c *gin.Context) {
 	var input web.CreateCampaignInput
 
-	err := c.ShouldBindJSON(&input)
+	err := c.ShouldBind(&input)
 
 	if err != nil {
 		errors := helper.FormatValidationError(err)
@@ -102,7 +102,7 @@ func (s *CampaignControllerImp) UpdateCampaign(c *gin.Context) {
 		return
 	}
 
-	err = c.ShouldBindJSON(&inputData)
+	err = c.ShouldBind(&inputData)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
 		errorMessage := gin.H{"errors": errors}

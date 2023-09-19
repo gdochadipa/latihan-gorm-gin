@@ -30,6 +30,7 @@ func NewRouter(
 	api.POST("/user/email-check", userController.CheckEmailAvailbility)
 	api.POST("/user/avatars", userController.UploadAvatar)
 	api.GET("/user/fetch", userController.FetchUser)
+	api.GET("/user/test", userController.GetUser)
 
 	api.GET("/campaigns", campaignController.GetCampaigns)
 	api.GET("/campaigns/:id", campaignController.GetCampaign)

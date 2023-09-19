@@ -8,14 +8,14 @@ type GetCampaignTransactionsInput struct {
 }
 
 type CreateTransactionInput struct {
-	Amount     int `json:"amount" binding:"required"`
-	CampaignID int `json:"campaign_id" binding:"required"`
+	Amount     int `json:"amount" binding:"required" form:"amount"`
+	CampaignID int `json:"campaign_id" binding:"required" form:"campaign_id"`
 	User       domain.User
 }
 
 type TransactionNotificationInput struct {
-	TransactionStatus string `json:"transaction_status"`
-	OrderID           string `json:"order_id"`
-	PaymentType       string `json:"payment_type"`
-	FraudStatus       string `json:"fraud_status"`
+	TransactionStatus string `json:"transaction_status" form:"transaction_status"`
+	OrderID           string `json:"order_id" form:"order_id"`
+	PaymentType       string `json:"payment_type" form:"payment_type"`
+	FraudStatus       string `json:"fraud_status" form:"fraud_status"`
 }

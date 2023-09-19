@@ -68,7 +68,7 @@ func (s *TransactionControllerImp) GetUserTransactions(context *gin.Context) {
 func (s *TransactionControllerImp) CreateTransaction(context *gin.Context) {
 	var input web.CreateTransactionInput
 
-	err := context.ShouldBindJSON(&input)
+	err := context.ShouldBind(&input)
 
 	if err != nil {
 		errors := helper.FormatValidationError(err)
@@ -100,7 +100,7 @@ func (s *TransactionControllerImp) CreateTransaction(context *gin.Context) {
 func (s *TransactionControllerImp) GetNotification(context *gin.Context) {
 	var input web.TransactionNotificationInput
 
-	err := context.ShouldBindJSON(&input)
+	err := context.ShouldBind(&input)
 	if err != nil {
 		response := helper.APIResponse("Failed to process notification", http.StatusBadRequest, "error", nil)
 		context.JSON(http.StatusBadRequest, response)
